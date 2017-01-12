@@ -122,7 +122,7 @@ class Query(QtCore.QObject):
             {self.qdescr[u'indices_field_name'].encode('utf_8'): \
             tables.Int64Col(pos=-1)}
         ft_dict.update(src_dict)
-        f_table = self.tmp_h5file.createTable(\
+        f_table = self.tmp_h5file.create_table(\
             u'/_p_query_results',
             self.qdescr[u'ft_name'],
             ft_dict,
@@ -161,7 +161,7 @@ class Query(QtCore.QObject):
             self.flushTable(f_table)
 
         # Move the intermediate table to its final destination
-        self.tmp_h5file.moveNode(\
+        self.tmp_h5file.move_node(\
             u'/_p_query_results/' + self.qdescr[u'ft_name'],
             u'/', newname=self.qdescr[u'ft_name'],
             overwrite=True)
@@ -178,7 +178,7 @@ class Query(QtCore.QObject):
         div = numpy.divide(stop - start, chunk_size)
 
         # Create the destination table
-        f_table = self.tmp_h5file.createTable(\
+        f_table = self.tmp_h5file.create_table(\
             u'/_p_query_results',
             self.qdescr[u'ft_name'],
             src_dict,
@@ -195,7 +195,7 @@ class Query(QtCore.QObject):
             lstop = lstart + chunk_size
             if lstop > stop:
                 lstop = stop
-            selection = self.table.readWhere(\
+            selection = self.table.read_where(\
                 self.qdescr[u'condition'],
                 self.qdescr[u'condvars'],
                 start=lstart, stop=lstop, step=step)
@@ -203,7 +203,7 @@ class Query(QtCore.QObject):
             self.flushTable(f_table)
 
         # Move the intermediate table to its final destination
-        self.tmp_h5file.moveNode(\
+        self.tmp_h5file.move_node(\
             u'/_p_query_results/' + self.qdescr[u'ft_name'],
             u'/', newname=self.qdescr[u'ft_name'],
             overwrite=True)
@@ -215,7 +215,7 @@ class Query(QtCore.QObject):
         """
 
         try:
-            src_dict = self.table.description._v_colObjects
+            src_dict = self.table.description._v_colobjects
             # Add an `indexes` column to the result table
             if self.qdescr[u'indices_field_name']:
                 self.queryWithIndex(src_dict)
@@ -224,7 +224,7 @@ class Query(QtCore.QObject):
                 self.queryWithNoIndex(src_dict)
         except KeyError:
             vitables.utils.formatExceptionInfo()
-            self.tmp_h5file.removeNode(\
+            self.tmp_h5file.remove_node(\
                 u'/_p_query_results/' + self.qdescr[u'ft_name'])
         else:
             self.tmp_h5file.flush()

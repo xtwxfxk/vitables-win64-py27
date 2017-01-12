@@ -635,7 +635,7 @@ class ImportCSV(QtCore.QObject):
             dataset_name = u"imported_{0}".format(kind)
             atitle = \
                 u'Source CSV file {0}'.format(os.path.basename(filepath))
-            dataset = dbdoc.h5file.createTable('/', dataset_name, descr, 
+            dataset = dbdoc.h5file.create_table('/', dataset_name, descr,
                 title=atitle, filters=io_filters, expectedrows=nrows)
 
             # Fill the dataset in a memory efficient way

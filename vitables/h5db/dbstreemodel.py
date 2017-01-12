@@ -246,7 +246,7 @@ class DBsTreeModel(QtCore.QAbstractItemModel):
                 # Close the hdf5 file
                 db_doc = self.getDBDoc(filepath)
                 if db_doc.hidden_group is not None:
-                    db_doc.h5file.removeNode(db_doc.hidden_group,
+                    db_doc.h5file.remove_node(db_doc.hidden_group,
                         recursive=True)
                 db_doc.closeH5File()
                 # Update the dictionary of open files
